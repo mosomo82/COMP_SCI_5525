@@ -1,68 +1,235 @@
-# Cloud Platform Deployment Assignment
-**Name:** Tony Nguyen  
-**Course:** CS5525 Cloud Computing  
-**Date:** March 2026
+# Assignment 2 — Multi-Cloud Web Deployment
+
+> **Course:** CS 5525 — Cloud Computing
+> **Student:** Tony Nguyen
+> **Date:** March 17 2026
+> **University:** University of Missouri – Kansas City
 
 ---
 
-## Step 1 & 2: Account Creation and Page Preparation
-I successfully established active accounts on Amazon Web Services, Google Cloud Platform, and Microsoft Azure. For the web content, I developed a standardized `index.html` file using VS Code, ensuring a consistent baseline for testing deployment across all three providers.
-
-![Local Development Preview](images/local.png)
-
----
-
-## Step 3.1: Amazon Web Services (AWS)
-### 1. Portal Access
-![AWS Portal Access](images/aws_portal.png)
-
-### 2. Deployment Method
-I utilized an **Amazon S3 Bucket** configured for **Static Website Hosting**. This managed service approach abstracts the server layer, allowing for high availability with minimal configuration.
-
-### 3. Execution & Transfer
-I uploaded the `index.html` file via the AWS Management Console and configured the Bucket Policy to allow public read access.
-![AWS Execution](images/aws_execution.png)
+## 📍 Table of Contents
+1. [📋 Overview](#-overview)
+2. [🌐 Live Deployments](#-live-deployments)
+3. [📄 Web Page](#-web-page)
+4. [☁️ Platform Deployment Details](#️-platform-deployment-details)
+    * [1. Amazon AWS (30%)](#1-amazon-aws-30)
+    * [2. Google Cloud Platform (30%)](#2-google-cloud-platform-30)
+    * [3. Microsoft Azure (30%)](#3-microsoft-azure-30)
+5. [📊 Platform Comparison](#-platform-comparison)
+6. [📝 Epilog](#-epilog)
+7. [🛠️ Technologies Used](#️-technologies-used)
+8. [📂 Repository Structure](#-repository-structure)
+9. [👤 Author](#-author)
 
 ---
 
-## Step 3.2: Google Cloud Platform (GCP)
-### 1. Portal Access
-![GCP Portal Access](images/gcp_portal.png)
+## 📋 Overview
 
-### 2. Deployment Method
-For GCP, I deployed a **Compute Engine VM Instance** (Infrastructure as a Service). This required manual environment setup, including the installation of a web server.
-
-### 3. Execution & Transfer
-After establishing an SSH connection, I installed **Apache2**, transferred the web content to the `/var/www/html/` directory, and updated the VPC firewall rules to allow HTTP traffic on port 80.
-![GCP Execution](images/gcp_execution.png)
+This assignment demonstrates deploying a personal web page across three major cloud providers — **Amazon Web Services (AWS)**, **Google Cloud Platform (GCP)**, and **Microsoft Azure** — using each platform's preferred hosting method. The goal is to compare Infrastructure-as-a-Service (IaaS) vs. Platform-as-a-Service (PaaS) approaches, understand IAM and access control policies, and practice real-world cloud deployment workflows.
 
 ---
 
-## Step 3.3: Microsoft Azure
-### 1. Portal Access
-![Azure Portal Access](images/azure_portal.png)
+## 🌐 Live Deployments
 
-### 2. Deployment Method
-I leveraged **Azure Storage Accounts** with the **Static Website** feature enabled. Similar to the AWS approach, this utilized Blob storage to serve content directly.
-
-### 3. Execution & Transfer
-I uploaded the file to the `$web` container using the Azure Portal. The platform automatically generated a primary endpoint for public access.
-![Azure Execution](images/azure_execution.png)
+| Platform | URL | Hosting Method |
+|----------|-----|----------------|
+| **AWS** | [http://amzn-s3-cs5525-tonyn-bucket.s3-website-us-east-1.amazonaws.com](http://amzn-s3-cs5525-tonyn-bucket.s3-website-us-east-1.amazonaws.com) | S3 Static Website Hosting |
+| **GCP** | [http://34.66.74.246](http://34.66.74.246) | Compute Engine VM + Apache2 |
+| **Azure** | [https://cs5525tonynstorage.z19.web.core.windows.net](https://cs5525tonynstorage.z19.web.core.windows.net) | Blob Storage Static Website |
 
 ---
 
-## Deployment Summary
+## 📄 Web Page
 
-| Platform | URL | Status |
-| :--- | :--- | :--- |
-| **Amazon AWS** | `amzn-s3-cs5525-tonyn-bucket.s3-website-us-east-1.amazonaws.com` | ✅ Online |
-| **Google Cloud Platform** | `http://34.66.74.246` | ✅ Online |
-| **Microsoft Azure** | `cs5525tonynstorage.z19.web.core.windows.net` | ✅ Online |
+A simple personal portfolio HTML page (`index.html`) was created and deployed on all three platforms, featuring:
+
+- Full name: **Tony Nguyen**
+- Title: *Data Scientist & Cloud Architect*
+- About Me section
+- Skills and project highlights
 
 ---
 
-## Step 4: Epilog
+## ☁️ Platform Deployment Details
 
-Deploying a personal web page across AWS, GCP, and Azure provided a practical demonstration of cloud service abstractions. The primary lesson learned is that the choice of service—ranging from fully managed storage buckets (AWS S3, Azure Storage) to infrastructure-as-a-service (GCP Compute Engine)—dictates the operational overhead. AWS S3 and Azure Storage were highly efficient; enabling static website hosting required only a few configuration steps and immediate URL generation. Conversely, the GCP Compute Engine deployment was more demanding, requiring SSH access, Apache installation, and manual directory management, which offered a deeper look into server-side fundamentals. 
+---
 
-The most significant challenge across all three platforms was navigating the nuances of Identity and Access Management (IAM) and firewall rules, where a single restrictive policy often led to 403 or timeout errors. While I found AWS S3 the most intuitive for rapid deployment, I appreciated the hands-on nature of the GCP VM approach. For future coursework, I believe a dedicated session on cloud networking fundamentals—specifically VPCs, security groups, and routing—would be invaluable for troubleshooting these cross-platform inconsistencies. Moving forward, I am interested in exploring how infrastructure-as-code (IaC) tools like Terraform could standardize these deployments across providers.
+### 1. Amazon AWS (30%)
+
+**Method:** S3 Static Website Hosting *(PaaS)*
+
+#### Steps Taken
+
+1. Signed into the **AWS Management Console** at `console.aws.amazon.com`
+2. Navigated to **S3** → Created a new bucket: `amzn-s3-cs5525-tonyn-bucket` (Region: us-east-1)
+3. Enabled **Static Website Hosting** under the bucket **Properties** tab
+4. Set `index.html` as the index document
+5. Disabled "Block all public access" and updated the **Bucket Policy** to allow public reads:
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [{
+       "Effect": "Allow",
+       "Principal": "*",
+       "Action": "s3:GetObject",
+       "Resource": "arn:aws:s3:::amzn-s3-cs5525-tonyn-bucket/*"
+     }]
+   }
+   ```
+6. Uploaded `index.html` to the bucket via the S3 console **Upload** button
+7. Verified the live site at the S3 website endpoint URL
+
+#### Screenshots
+
+| Step | Description |
+|------|-------------|
+| Screenshot 1 | AWS Console — logged in with account name visible |
+| Screenshot 2 | S3 bucket created and Static Website Hosting enabled |
+| Screenshot 3 | Bucket Policy configured for public access |
+| Screenshot 4 | `index.html` uploaded and listed in Objects tab |
+| Screenshot 5 | Live site accessible at S3 endpoint |
+
+---
+
+### 2. Google Cloud Platform (30%)
+
+**Method:** Compute Engine VM with Apache2 HTTP Server *(IaaS)*
+
+#### Steps Taken
+
+1. Signed into the **Google Cloud Console** at `console.cloud.google.com`
+2. Created a new project: `cs5525-tonyn`
+3. Navigated to **Compute Engine** → **VM Instances** → Created a new VM:
+   - **Machine type:** `e2-micro` (free tier eligible)
+   - **Boot disk:** Ubuntu 22.04 LTS
+   - **Firewall:** Checked *Allow HTTP traffic* and *Allow HTTPS traffic*
+4. SSH'd into the VM using the **Cloud Shell SSH** button
+5. Installed and started Apache2 web server:
+   ```bash
+   sudo apt update && sudo apt upgrade -y
+   sudo apt install apache2 -y
+   sudo systemctl start apache2
+   sudo systemctl enable apache2
+   ```
+6. Verified Apache default page via the external IP
+7. Transferred the `index.html` content to the web root:
+   ```bash
+   sudo nano /var/www/html/index.html
+   # Pasted HTML content, saved with Ctrl+O, exited with Ctrl+X
+   ```
+8. Confirmed the live page at `http://34.66.74.246`
+
+#### Screenshots
+
+| Step | Description |
+|------|-------------|
+| Screenshot 1 | GCP Console — logged in with account email visible |
+| Screenshot 2 | Compute Engine VM instance running (external IP shown) |
+| Screenshot 3 | SSH terminal — Apache2 installation and systemctl output |
+| Screenshot 4 | SSH terminal — writing `index.html` to `/var/www/html/` |
+| Screenshot 5 | Live site accessible at GCP external IP |
+
+---
+
+### 3. Microsoft Azure (30%)
+
+**Method:** Azure Blob Storage Static Website *(PaaS)*
+
+#### Steps Taken
+
+1. Signed into the **Azure Portal** at `portal.azure.com`
+2. Created a **Storage Account**: `cs5525tonynstorage`
+   - **Region:** East US
+   - **Performance:** Standard
+   - **Redundancy:** LRS (Locally Redundant Storage)
+3. Navigated to **Data management** → **Static website**
+4. Enabled static website hosting and configured:
+   - **Index document name:** `index.html`
+   - **Error document path:** `404.html`
+5. Noted the auto-generated primary endpoint URL
+6. Navigated to the auto-created **`$web`** container
+7. Uploaded `index.html` via the **Upload** button in the container view
+8. Verified the live site at the Azure static website endpoint
+
+#### Screenshots
+
+| Step | Description |
+|------|-------------|
+| Screenshot 1 | Azure Portal — logged in with account name visible |
+| Screenshot 2 | Storage account `cs5525tonynstorage` created |
+| Screenshot 3 | Static website feature enabled with index document set |
+| Screenshot 4 | `index.html` uploaded to the `$web` container |
+| Screenshot 5 | Live site accessible at Azure endpoint |
+
+---
+
+## 📊 Platform Comparison
+
+| Feature | AWS S3 | GCP Compute Engine | Azure Blob Storage |
+|---------|--------|--------------------|--------------------|
+| **Deployment Type** | PaaS (Managed) | IaaS (Virtual Machine) | PaaS (Managed) |
+| **Setup Complexity** | ⭐ Low | ⭐⭐⭐ High | ⭐ Low |
+| **Server Management** | None required | Full (Apache2) | None required |
+| **HTTPS Support** | Via CloudFront CDN | Manual cert installation | Built-in ✅ |
+| **Free Tier** | 5 GB storage / 20K requests | 1× e2-micro VM/month | 5 GB storage / month |
+| **Deployment Speed** | ~5 minutes | ~20 minutes | ~5 minutes |
+| **File Transfer Method** | S3 Console / AWS CLI | SCP / SSH / Cloud Shell | Azure Portal / Storage Explorer |
+| **IAM / Access Config** | Bucket Policy (JSON) | Firewall Rules + IAM Roles | Blob access level + RBAC |
+| **Custom Domain** | Via Route 53 | Via DNS A record | Via Azure CDN |
+
+---
+
+## 📝 Epilog
+
+Deploying a simple personal web page across AWS, Google Cloud Platform, and Microsoft Azure was both an illuminating and challenging experience. The most important lesson learned was that each provider offers multiple pathways to the same result: AWS S3 and Azure Blob Storage made static hosting effortless through a simple toggle and bucket/container policy, requiring minimal configuration for public access and producing a live URL in minutes; GCP, by contrast, required provisioning a full Compute Engine VM and manually installing and configuring Apache2, which was the most hands-on but also the most educational step in understanding how web servers actually function at the infrastructure level. The most difficult part across all three platforms was navigating IAM policies, bucket permissions, and firewall rules — a misconfigured firewall rule on GCP blocked all HTTP traffic until port 80 was explicitly opened in the VPC firewall settings, and AWS's "Block Public Access" default required careful policy overrides to serve content publicly. AWS S3 was the most enjoyable method for its simplicity, speed, and clean endpoint URL out of the box, while GCP Compute Engine was the most rewarding in terms of understanding real infrastructure management. In future classes, I would recommend a dedicated session on cloud networking fundamentals — VPCs, security groups, and firewall rules — as understanding these concepts upfront would have saved significant troubleshooting time across all three deployments, along with an introduction to infrastructure-as-code tools like Terraform for standardizing and automating multi-cloud workflows.
+
+---
+
+## 🛠️ Technologies Used
+
+- **HTML / CSS** — Static personal portfolio web page
+- **Amazon S3** — Object storage with static website hosting (AWS)
+- **Google Compute Engine** — Ubuntu 22.04 LTS virtual machine (GCP)
+- **Apache2** — HTTP web server installed on GCP VM
+- **Azure Blob Storage** — Object storage with static website hosting (Azure)
+- **Google Cloud Shell / SSH** — Remote VM access and file transfer
+- **AWS Management Console** — S3 bucket creation and management
+- **Azure Portal** — Storage account and container management
+
+---
+
+## 📂 Repository Structure
+
+```
+Assignment_2/
+├── index.html              # Web page deployed to all three platforms
+├── readme.md               # This file
+└── screenshots/
+    ├── aws/
+    │   ├── 01_aws_console_login.png
+    │   ├── 02_s3_bucket_static_hosting.png
+    │   ├── 03_bucket_policy.png
+    │   ├── 04_file_upload.png
+    │   └── 05_live_site.png
+    ├── gcp/
+    │   ├── 01_gcp_console_login.png
+    │   ├── 02_vm_instance_running.png
+    │   ├── 03_ssh_apache_install.png
+    │   ├── 04_file_transfer_webroot.png
+    │   └── 05_live_site.png
+    └── azure/
+        ├── 01_azure_portal_login.png
+        ├── 02_storage_account_created.png
+        ├── 03_static_website_enabled.png
+        ├── 04_file_upload_web_container.png
+        └── 05_live_site.png
+```
+
+---
+
+## 👤 Author
+
+**Tony Nguyen**
+Master of Science in Data Science and Analytics
+University of Missouri – Kansas City
+CS 5525 — Cloud Computing | Spring 2026
