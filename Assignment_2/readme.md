@@ -8,46 +8,46 @@
 ## Step 1 & 2: Account Creation and Page Preparation
 I successfully established active accounts on Amazon Web Services, Google Cloud Platform, and Microsoft Azure. For the web content, I developed a standardized `index.html` file using VS Code, ensuring a consistent baseline for testing deployment across all three providers.
 
-![Local Development Preview](images/local-development.png)
+![Local Development Preview](images/local.png)
 
 ---
 
 ## Step 3.1: Amazon Web Services (AWS)
 ### 1. Portal Access
-![AWS Portal Access](images/aws-portal.png)
+![AWS Portal Access](images/aws_portal.png)
 
 ### 2. Deployment Method
 I utilized an **Amazon S3 Bucket** configured for **Static Website Hosting**. This managed service approach abstracts the server layer, allowing for high availability with minimal configuration.
 
 ### 3. Execution & Transfer
 I uploaded the `index.html` file via the AWS Management Console and configured the Bucket Policy to allow public read access.
-![AWS Execution](images/aws-deployed.png)
+![AWS Execution](images/aws_execution.png)
 
 ---
 
 ## Step 3.2: Google Cloud Platform (GCP)
 ### 1. Portal Access
-![GCP Portal Access](images/gcp-portal.png)
+![GCP Portal Access](images/gcp_portal.png)
 
 ### 2. Deployment Method
 For GCP, I deployed a **Compute Engine VM Instance** (Infrastructure as a Service). This required manual environment setup, including the installation of a web server.
 
 ### 3. Execution & Transfer
 After establishing an SSH connection, I installed **Apache2**, transferred the web content to the `/var/www/html/` directory, and updated the VPC firewall rules to allow HTTP traffic on port 80.
-![GCP Execution](images/gcp-deployed.png)
+![GCP Execution](images/gcp_execution.png)
 
 ---
 
 ## Step 3.3: Microsoft Azure
 ### 1. Portal Access
-![Azure Portal Access](images/azure-portal.png)
+![Azure Portal Access](images/azure_portal.png)
 
 ### 2. Deployment Method
 I leveraged **Azure Storage Accounts** with the **Static Website** feature enabled. Similar to the AWS approach, this utilized Blob storage to serve content directly.
 
 ### 3. Execution & Transfer
 I uploaded the file to the `$web` container using the Azure Portal. The platform automatically generated a primary endpoint for public access.
-![Azure Execution](images/azure-deployed.png)
+![Azure Execution](images/azure_execution.png)
 
 ---
 
