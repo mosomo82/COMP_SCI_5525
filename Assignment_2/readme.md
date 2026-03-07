@@ -1,9 +1,25 @@
 # Assignment 2 — Multi-Cloud Web Deployment
 
-**Course:** CS 5525 — Cloud Computing
-**Student:** Tony Nguyen
-**Date:** March 2026
-**University:** University of Missouri – Kansas City
+> **Course:** CS 5525 — Cloud Computing
+> **Student:** Tony Nguyen
+> **Date:** March 2026
+> **University:** University of Missouri – Kansas City
+
+---
+
+## 📍 Table of Contents
+1. [📋 Overview](#-overview)
+2. [🌐 Live Deployments](#-live-deployments)
+3. [📄 Web Page](#-web-page)
+4. [☁️ Platform Deployment Details](#️-platform-deployment-details)
+    * [1. Amazon AWS (30%)](#1-amazon-aws-30)
+    * [2. Google Cloud Platform (30%)](#2-google-cloud-platform-30)
+    * [3. Microsoft Azure (30%)](#3-microsoft-azure-30)
+5. [📊 Platform Comparison](#-platform-comparison)
+6. [📝 Epilog](#-epilog)
+7. [🛠️ Technologies Used](#️-technologies-used)
+8. [📂 Repository Structure](#-repository-structure)
+9. [👤 Author](#-author)
 
 ---
 
