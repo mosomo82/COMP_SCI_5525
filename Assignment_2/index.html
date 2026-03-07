@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tony Nguyen | Data Science Portfolio</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .hero h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .about {
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: #444;
+        }
+
+        .about h3 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .projects {
+            padding: 4rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .projects h3 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+
+        .grid {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            flex: 1;
+            min-width: 300px;
+            max-width: 450px;
+        }
+
+        .card h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Tony Nguyen</h1>
+    </header>
+
+    <section class="hero">
+        <h2>Data Scientist & Cloud Architect</h2>
+        <p>Specializing in machine learning, cloud-based analytics, and scalable supply chain optimization systems.</p>
+        <a href="#projects" class="btn">View My Work</a>
+    </section>
+
+    <section id="about" class="about">
+        <h3>About Me</h3>
+        <p>I am a data scientist and cloud architecture enthusiast with a deep background in supply chain management. Currently pursuing a Master of Science in Data Science and Analytics at the University of Missouri-Kansas City, I specialize in bridging the gap between complex logistical operations and actionable, data-driven insights.</p>
+        
+        <p>With an AWS Cloud Practitioner certification and a Bachelor of Science in Management Information Systems from the University of Arizona, my technical toolkit heavily features Python, SQL, Snowflake, and machine learning methodologies. My professional journey spans roles from a Solution Engineer to my current work in transportation and yard operations at Amazon, giving me a firsthand understanding of enterprise-scale logistics.</p>
+        
+        <p>Whether I am architecting scalable ETL pipelines, deploying predictive models, or developing intelligent systems like HyperLogistics, my goal is to leverage cloud technologies and AI to optimize workflows and solve high-impact business challenges.</p>
+    </section>
+
+    <section id="projects" class="projects">
+        <h3>Featured Projects</h3>
+        <div class="grid">
+            <div class="card">
+                <h4>HyperLogistics Architecture</h4>
+                <p>A Smart Supply Chain Optimization System utilizing HyperGraph RAG and Snowflake native pipelines to streamline operations and enhance data visibility.</p>
+            </div>
+            <div class="card">
+                <h4>UMKC Hack-a-Roo Fall 2025</h4>
+                <p>Awarded 2nd place in the LLM Track. Developed an innovative language model solution under tight constraints.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Tony Nguyen. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
