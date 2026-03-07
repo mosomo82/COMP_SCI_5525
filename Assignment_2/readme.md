@@ -83,11 +83,11 @@ A simple personal portfolio HTML page (`index.html`) was created and deployed on
 
 | Step | Description |
 |------|-------------|
-| Screenshot 1 | AWS Console — logged in with account name visible |
-| Screenshot 2 | S3 bucket created and Static Website Hosting enabled |
-| Screenshot 3 | Bucket Policy configured for public access |
-| Screenshot 4 | `index.html` uploaded and listed in Objects tab |
-| Screenshot 5 | Live site accessible at S3 endpoint |
+| <img src="./images/aws_ss1.png" width="100" height="50" halt="Screen Shot 1"> | AWS Console — logged in with account name visible |
+| <img src="./images/aws_ss2.png" width="100" alt="Screen Shot 2">| S3 bucket created and Static Website Hosting enabled |
+| <img src="./images/aws_ss3.png" width="100" alt="Screen Shot 3"> | Bucket Policy configured for public access |
+| <img src="./images/aws_ss4.png" width="100" alt="Screen Shot 4"> | `index.html` uploaded and listed in Objects tab |
+| <img src="./images/aws_ss5.png" width="100" alt="Screen Shot 5"> | Live site accessible at S3 endpoint |
 
 ---
 
@@ -121,13 +121,13 @@ A simple personal portfolio HTML page (`index.html`) was created and deployed on
 
 #### Screenshots
 
-| Step | Description |
+| Step | Description | 
 |------|-------------|
-| Screenshot 1 | GCP Console — logged in with account email visible |
-| Screenshot 2 | Compute Engine VM instance running (external IP shown) |
-| Screenshot 3 | SSH terminal — Apache2 installation and systemctl output |
-| Screenshot 4 | SSH terminal — writing `index.html` to `/var/www/html/` |
-| Screenshot 5 | Live site accessible at GCP external IP |
+| <img src="./images/gcp_ss1.png" width="100" height="50" halt="Screen Shot 1"> | GCP Console — logged in with account email visible |  |
+| <img src="./images/gcp_ss2.png" width="100" height="50" halt="Screen Shot 2">  | Compute Engine VM instance running (external IP shown) |
+| <img src="./images/gcp_ss3.png" width="100" height="50" halt="Screen Shot 3">  | SSH terminal — Apache2 installation and systemctl output |
+| <img src="./images/gcp_ss4.png" width="100" height="50" halt="Screen Shot 4">  | SSH terminal — writing `index.html` to `/var/www/html/` |
+| <img src="./images/gcp_ss5.png" width="100" height="50" halt="Screen Shot 5"> | Live site accessible at GCP external IP |
 
 ---
 
@@ -155,11 +155,11 @@ A simple personal portfolio HTML page (`index.html`) was created and deployed on
 
 | Step | Description |
 |------|-------------|
-| Screenshot 1 | Azure Portal — logged in with account name visible |
-| Screenshot 2 | Storage account `cs5525tonynstorage` created |
-| Screenshot 3 | Static website feature enabled with index document set |
-| Screenshot 4 | `index.html` uploaded to the `$web` container |
-| Screenshot 5 | Live site accessible at Azure endpoint |
+| <img src="./images/azure_ss1.png" width="100" height="50" halt="Screen Shot 1"> | Azure Portal — logged in with account name visible |
+| <img src="./images/azure_ss2.png" width="100" height="50" halt="Screen Shot 2"> | Storage account `cs5525tonynstorage` created |
+| <img src="./images/azure_ss3.png" width="100" height="50" halt="Screen Shot 3"> | Static website feature enabled with index document set |
+| <img src="./images/azure_ss4.png" width="100" height="50" halt="Screen Shot 4"> | `index.html` uploaded to the `$web` container |
+| <img src="./images/azure_ss5.png" width="100" height="50" halt="Screen Shot 5"> | Live site accessible at Azure endpoint |
 
 ---
 
