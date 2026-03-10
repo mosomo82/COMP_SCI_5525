@@ -183,17 +183,13 @@ A simple personal portfolio HTML page (`index.html`) was created and deployed on
 
 Deploying a simple personal website across AWS, Google Cloud Platform (GCP), and Microsoft Azure was an eye-opening journey revealing both the similarities and differences among those three giant web hosting providers.
 
-
 AWS S3 and Azure Blob Storage stood out for their simplicity in hosting static websites. I was able to enable static website hosting with a few clicks and set the appropriate bucket or container policies to make my site publicly accessible. The process was straightforward, and I had a live URL up and running in no time. AWS S3, in particular, was enjoyable due to its simplicity and the clean, easy-to-remember endpoint URL it provided.
-
 
 GCP, on the other hand, took a more hands-on approach. I had to provision a Compute Engine VM and manually install and configure Apache2. This method was the most time-consuming but also the most educational. It gave me a deeper understanding of how web servers operate at the infrastructure level. I learned how to set up the server and how to configure the web server software.
 
-
 The most challenging aspect across all three platforms was managing IAM policies, bucket permissions, and firewall rules. A misconfigured firewall rule on GCP initially blocked all HTTP traffic until I explicitly opened port 80 in the VPC firewall settings. For example, AWS’s default "Block Public Access" setting required careful policy overrides to serve content publicly. These experiences underscored the importance of meticulous configuration management.
 
-
-In my own reflection, I believe future classes should include a dedicated session on cloud networking fundamentals, such as VPCs, security groups, and firewall rules. A solid understanding of these concepts upfront would have significantly reduced the troubleshooting time I spent across all three deployments. Further, an initial exposure to  infrastructure-as-code tools like Terraform could help standardize and automate multi-cloud workflows. It would enhance the process both the efficiency and the reduction of errors. 
+In my own reflection, I believe future classes should include a dedicated session on cloud networking fundamentals, such as VPCs, security groups, and firewall rules. A solid understanding of these concepts upfront would have significantly reduced the troubleshooting time I spent across all three deployments. Further, an initial exposure to infrastructure-as-code tools like Terraform could help standardize and automate multi-cloud workflows. It would enhance the process both the efficiency and the reduction of errors.
 
 ---
 
