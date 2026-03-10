@@ -1,0 +1,438 @@
+\documentclass[12pt,letterpaper]{article}
+
+% ── Encoding & fonts ──────────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% ── Page layout ───────────────────────────────────────────────────────────────
+\usepackage[margin=1in]{geometry}
+
+% ── Graphics ──────────────────────────────────────────────────────────────────
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+% ── Tables ────────────────────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+
+% ── Colours ───────────────────────────────────────────────────────────────────
+\usepackage[dvipsnames]{xcolor}
+\definecolor{awsorange}{RGB}{255,153,0}
+\definecolor{gcpblue}{RGB}{66,133,244}
+\definecolor{azureblue}{RGB}{0,120,212}
+\definecolor{codebg}{RGB}{245,245,245}
+\definecolor{coderule}{RGB}{200,200,200}
+
+% ── Hyperlinks ────────────────────────────────────────────────────────────────
+\usepackage[
+  colorlinks=true,
+  linkcolor=black,
+  urlcolor=blue,
+  citecolor=black,
+  pdfborder={0 0 0}
+]{hyperref}
+
+% ── Code listings ─────────────────────────────────────────────────────────────
+\usepackage{listings}
+\lstdefinestyle{jsonStyle}{
+  language=,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{coderule},
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  captionpos=b,
+  numbers=none,
+  showstringspaces=false,
+  aboveskip=6pt,
+  belowskip=6pt,
+}
+\lstdefinestyle{bashStyle}{
+  language=bash,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{coderule},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  breaklines=true,
+  captionpos=b,
+  numbers=none,
+  showstringspaces=false,
+  aboveskip=6pt,
+  belowskip=6pt,
+}
+
+% ── Section styling ───────────────────────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{}{0pt}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{}{0pt}{}
+
+% ── Lists ─────────────────────────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=4pt}
+\setlist[enumerate]{noitemsep, topsep=4pt}
+
+% ── Misc ──────────────────────────────────────────────────────────────────────
+\usepackage{microtype}
+\usepackage{parskip}
+\setlength{\parskip}{6pt}
+\usepackage{fancyhdr}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small CS 5525 --- Cloud Computing}
+\rhead{\small Tony Nguyen}
+\cfoot{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Screenshot helper ─────────────────────────────────────────────────────────
+% Usage: \screenshot{rel/path}{caption text}
+\newcommand{\screenshot}[2]{%
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\linewidth]{#1}
+    \caption{#2}
+  \end{figure}%
+}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ── Title page ────────────────────────────────────────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+  {\LARGE\bfseries Assignment 2 --- Multi-Cloud Web Deployment\par}
+  \vspace{1cm}
+  \rule{0.6\linewidth}{0.4pt}
+  \vspace{1cm}
+
+  {\large
+    \textbf{Course:} CS 5525 --- Cloud Computing\\[6pt]
+    \textbf{Student:} Tony Nguyen\\[6pt]
+    \textbf{Date:} March 17, 2026\\[6pt]
+    \textbf{University:} University of Missouri -- Kansas City
+  }
+
+  \vspace{2cm}
+  \rule{0.6\linewidth}{0.4pt}
+  \vspace{1cm}
+
+  {\normalsize
+    Deployment across \textbf{Amazon Web Services (AWS)},\\
+    \textbf{Google Cloud Platform (GCP)}, and \textbf{Microsoft Azure}
+  }
+  \vfill
+\end{titlepage}
+
+% ── Table of Contents ─────────────────────────────────────────────────────────
+\tableofcontents
+\newpage
+
+% =============================================================================
+\section{Overview}
+% =============================================================================
+
+This assignment demonstrates deploying a personal web page across three major cloud
+providers --- \textbf{Amazon Web Services (AWS)}, \textbf{Google Cloud Platform (GCP)},
+and \textbf{Microsoft Azure} --- using each platform's preferred hosting method. The
+goal is to compare Infrastructure-as-a-Service (IaaS) vs.\ Platform-as-a-Service (PaaS)
+approaches, understand IAM and access control policies, and practice real-world cloud
+deployment workflows.
+
+% =============================================================================
+\section{Live Deployments}
+% =============================================================================
+
+\begin{center}
+\begin{tabularx}{\linewidth}{@{} l X l @{}}
+\toprule
+\textbf{Platform} & \textbf{URL} & \textbf{Hosting Method} \\
+\midrule
+\textbf{AWS} &
+  \href{http://amzn-s3-cs5525-tonyn-bucket.s3-website-us-east-1.amazonaws.com}%
+       {\small amzn-s3-cs5525-tonyn-bucket.s3-website-us-east-1.amazonaws.com} &
+  S3 Static Website \\[4pt]
+\textbf{GCP} &
+  \href{http://34.66.74.246}{\small http://34.66.74.246} &
+  Compute Engine + Apache2 \\[4pt]
+\textbf{Azure} &
+  \href{https://cs5525tonynstorage.z19.web.core.windows.net}%
+       {\small cs5525tonynstorage.z19.web.core.windows.net} &
+  Blob Storage Static Website \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+% =============================================================================
+\section{Web Page}
+% =============================================================================
+
+A simple personal portfolio HTML page (\texttt{index.html}) was created and deployed
+on all three platforms, featuring:
+
+\begin{itemize}
+  \item Full name: \textbf{Tony Nguyen}
+  \item Title: \textit{Data Scientist \& Cloud Architect}
+  \item About Me section
+  \item Skills and project highlights
+\end{itemize}
+
+% =============================================================================
+\section{Platform Deployment Details}
+% =============================================================================
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{1.\ Amazon AWS (30\%)}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\textbf{Method:} S3 Static Website Hosting \textit{(PaaS)}
+
+\subsubsection{Steps Taken}
+
+\begin{enumerate}
+  \item Signed into the \textbf{AWS Management Console} at
+        \texttt{console.aws.amazon.com}.
+  \item Navigated to \textbf{S3} $\to$ Created a new bucket:
+        \texttt{amzn-s3-cs5525-tonyn-bucket} (Region: us-east-1).
+  \item Enabled \textbf{Static Website Hosting} under the bucket
+        \textbf{Properties} tab.
+  \item Set \texttt{index.html} as the index document.
+  \item Disabled ``Block all public access'' and updated the \textbf{Bucket
+        Policy} to allow public reads:
+
+\begin{lstlisting}[style=jsonStyle]
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Principal": "*",
+    "Action": "s3:GetObject",
+    "Resource": "arn:aws:s3:::amzn-s3-cs5525-tonyn-bucket/*"
+  }]
+}
+\end{lstlisting}
+
+  \item Uploaded \texttt{index.html} to the bucket via the S3 console
+        \textbf{Upload} button.
+  \item Verified the live site at the S3 website endpoint URL.
+\end{enumerate}
+
+\subsubsection{Screenshots}
+
+\screenshot{aws/01_aws_console_login.png}{AWS Console --- logged in with account name visible}
+\screenshot{aws/02_s3_bucket_static_hosting.png}{S3 bucket created and Static Website Hosting enabled}
+\screenshot{aws/03_bucket_policy.png}{Bucket Policy configured for public access}
+\screenshot{aws/04_file_upload.png}{\texttt{index.html} uploaded and listed in Objects tab}
+\screenshot{aws/05_live_site.png}{Live site accessible at S3 endpoint}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{2.\ Google Cloud Platform (30\%)}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\textbf{Method:} Compute Engine VM with Apache2 HTTP Server \textit{(IaaS)}
+
+\subsubsection{Steps Taken}
+
+\begin{enumerate}
+  \item Signed into the \textbf{Google Cloud Console} at
+        \texttt{console.cloud.google.com}.
+  \item Created a new project: \texttt{cs5525-tonyn}.
+  \item Navigated to \textbf{Compute Engine} $\to$ \textbf{VM Instances} $\to$
+        Created a new VM:
+        \begin{itemize}
+          \item \textbf{Machine type:} \texttt{e2-micro} (free-tier eligible)
+          \item \textbf{Boot disk:} Ubuntu 22.04 LTS
+          \item \textbf{Firewall:} Checked \textit{Allow HTTP traffic} and
+                \textit{Allow HTTPS traffic}
+        \end{itemize}
+  \item SSH'd into the VM using the \textbf{Cloud Shell SSH} button.
+  \item Installed and started the Apache2 web server:
+
+\begin{lstlisting}[style=bashStyle]
+sudo apt update && sudo apt upgrade -y
+sudo apt install apache2 -y
+sudo systemctl start apache2
+sudo systemctl enable apache2
+\end{lstlisting}
+
+  \item Verified the Apache default page via the external IP.
+  \item Transferred the \texttt{index.html} content to the web root:
+
+\begin{lstlisting}[style=bashStyle]
+sudo nano /var/www/html/index.html
+# Pasted HTML content, saved with Ctrl+O, exited with Ctrl+X
+\end{lstlisting}
+
+  \item Confirmed the live page at \href{http://34.66.74.246}{\texttt{http://34.66.74.246}}.
+\end{enumerate}
+
+\subsubsection{Screenshots}
+
+\screenshot{gcp/01_gcp_console_login.png}{GCP Console --- logged in with account email visible}
+\screenshot{gcp/02_vm_instance_running.png}{Compute Engine VM instance running (external IP shown)}
+\screenshot{gcp/03_ssh_apache_install.png}{SSH terminal --- Apache2 installation and systemctl output}
+\screenshot{gcp/04_file_transfer_webroot.png}{SSH terminal --- writing \texttt{index.html} to \texttt{/var/www/html/}}
+\screenshot{gcp/05_live_site.png}{Live site accessible at GCP external IP}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{3.\ Microsoft Azure (30\%)}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\textbf{Method:} Azure Blob Storage Static Website \textit{(PaaS)}
+
+\subsubsection{Steps Taken}
+
+\begin{enumerate}
+  \item Signed into the \textbf{Azure Portal} at \texttt{portal.azure.com}.
+  \item Created a \textbf{Storage Account}: \texttt{cs5525tonynstorage}
+        \begin{itemize}
+          \item \textbf{Region:} East US
+          \item \textbf{Performance:} Standard
+          \item \textbf{Redundancy:} LRS (Locally Redundant Storage)
+        \end{itemize}
+  \item Navigated to \textbf{Data management} $\to$ \textbf{Static website}.
+  \item Enabled static website hosting and configured:
+        \begin{itemize}
+          \item \textbf{Index document name:} \texttt{index.html}
+          \item \textbf{Error document path:} \texttt{404.html}
+        \end{itemize}
+  \item Noted the auto-generated primary endpoint URL.
+  \item Navigated to the auto-created \textbf{\texttt{\$web}} container.
+  \item Uploaded \texttt{index.html} via the \textbf{Upload} button in the
+        container view.
+  \item Verified the live site at the Azure static website endpoint.
+\end{enumerate}
+
+\subsubsection{Screenshots}
+
+\screenshot{azure/01_azure_portal_login.png}{Azure Portal --- logged in with account name visible}
+\screenshot{azure/02_storage_account_created.png}{Storage account \texttt{cs5525tonynstorage} created}
+\screenshot{azure/03_static_website_enabled.png}{Static website feature enabled with index document set}
+\screenshot{azure/04_file_upload_web_container.png}{\texttt{index.html} uploaded to the \texttt{\$web} container}
+\screenshot{azure/05_live_site.png}{Live site accessible at Azure endpoint}
+
+% =============================================================================
+\section{Platform Comparison}
+% =============================================================================
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{} l X X X @{}}
+\toprule
+\textbf{Feature} & \textbf{AWS S3} & \textbf{GCP Compute Engine} & \textbf{Azure Blob Storage} \\
+\midrule
+Deployment Type     & PaaS (Managed)       & IaaS (VM)              & PaaS (Managed) \\
+Setup Complexity    & Low                  & High                   & Low \\
+Server Management   & None required        & Full (Apache2)         & None required \\
+HTTPS Support       & Via CloudFront CDN   & Manual cert install    & Built-in \\
+Free Tier           & 5 GB / 20K req       & 1$\times$ e2-micro/mo  & 5 GB / month \\
+Deployment Speed    & $\sim$5 min          & $\sim$20 min           & $\sim$5 min \\
+File Transfer       & S3 Console / CLI     & SCP / SSH / Shell      & Portal / Storage Explorer \\
+IAM / Access        & Bucket Policy (JSON) & Firewall + IAM Roles   & Blob access + RBAC \\
+Custom Domain       & Via Route 53         & Via DNS A record       & Via Azure CDN \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+% =============================================================================
+\section{Epilog}
+% =============================================================================
+
+Deploying a simple personal website across AWS, Google Cloud Platform (GCP), and
+Microsoft Azure was an eye-opening journey revealing both the similarities and
+differences among those three giant web hosting providers.
+
+AWS S3 and Azure Blob Storage stood out for their simplicity in hosting static
+websites. I was able to enable static website hosting with a few clicks and set
+the appropriate bucket or container policies to make my site publicly accessible.
+The process was straightforward, and I had a live URL up and running in no time.
+AWS S3, in particular, was enjoyable due to its simplicity and the clean,
+easy-to-remember endpoint URL it provided.
+
+GCP, on the other hand, took a more hands-on approach. I had to provision a
+Compute Engine VM and manually install and configure Apache2. This method was
+the most time-consuming but also the most educational. It gave me a deeper
+understanding of how web servers operate at the infrastructure level. I learned
+how to set up the server and how to configure the web server software.
+
+The most challenging aspect across all three platforms was managing IAM policies,
+bucket permissions, and firewall rules. A misconfigured firewall rule on GCP
+initially blocked all HTTP traffic until I explicitly opened port 80 in the VPC
+firewall settings. AWS's default ``Block Public Access'' setting required careful
+policy overrides to serve content publicly. These experiences underscored the
+importance of meticulous configuration management.
+
+In my own reflection, I believe future classes should include a dedicated session
+on cloud networking fundamentals, such as VPCs, security groups, and firewall
+rules. A solid understanding of these concepts upfront would have significantly
+reduced the troubleshooting time I spent across all three deployments. Further,
+an initial exposure to infrastructure-as-code tools like Terraform could help
+standardize and automate multi-cloud workflows and enhance both efficiency and
+error reduction.
+
+% =============================================================================
+\section{Technologies Used}
+% =============================================================================
+
+\begin{itemize}
+  \item \textbf{HTML / CSS} --- Static personal portfolio web page
+  \item \textbf{Amazon S3} --- Object storage with static website hosting (AWS)
+  \item \textbf{Google Compute Engine} --- Ubuntu 22.04 LTS virtual machine (GCP)
+  \item \textbf{Apache2} --- HTTP web server installed on GCP VM
+  \item \textbf{Azure Blob Storage} --- Object storage with static website hosting (Azure)
+  \item \textbf{Google Cloud Shell / SSH} --- Remote VM access and file transfer
+  \item \textbf{AWS Management Console} --- S3 bucket creation and management
+  \item \textbf{Azure Portal} --- Storage account and container management
+\end{itemize}
+
+% =============================================================================
+\section{Repository Structure}
+% =============================================================================
+
+\begin{lstlisting}[style=bashStyle, frame=none, backgroundcolor=\color{white}]
+Assignment_2/
+|-- index.html              # Web page deployed to all three platforms
+|-- readme.md               # Project documentation
+|-- assignment2.tex         # This LaTeX source file
+|-- assignment2.pdf         # Compiled PDF report
+`-- images/
+    |-- aws/
+    |   |-- 01_aws_console_login.png
+    |   |-- 02_s3_bucket_static_hosting.png
+    |   |-- 03_bucket_policy.png
+    |   |-- 04_file_upload.png
+    |   `-- 05_live_site.png
+    |-- gcp/
+    |   |-- 01_gcp_console_login.png
+    |   |-- 02_vm_instance_running.png
+    |   |-- 03_ssh_apache_install.png
+    |   |-- 04_file_transfer_webroot.png
+    |   `-- 05_live_site.png
+    `-- azure/
+        |-- 01_azure_portal_login.png
+        |-- 02_storage_account_created.png
+        |-- 03_static_website_enabled.png
+        |-- 04_file_upload_web_container.png
+        `-- 05_live_site.png
+\end{lstlisting}
+
+% =============================================================================
+\section{Author}
+% =============================================================================
+
+\begin{center}
+\begin{tabular}{rl}
+  \textbf{Name:}    & Tony Nguyen \\
+  \textbf{Degree:}  & Master of Science in Data Science and Analytics \\
+  \textbf{University:} & University of Missouri -- Kansas City \\
+  \textbf{Course:}  & CS 5525 --- Cloud Computing, Spring 2026 \\
+\end{tabular}
+\end{center}
+
+\end{document}
