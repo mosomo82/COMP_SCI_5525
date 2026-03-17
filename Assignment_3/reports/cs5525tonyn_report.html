@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS5525 — Docker Image Demo Report — Tony Nguyen</title>
+<style>
+  /* ── Page & print setup ── */
+  @page { size: letter; margin: 1in; }
+  @media print {
+    .no-print { display: none; }
+    .step { page-break-inside: avoid; }
+    h2 { page-break-before: auto; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 11pt;
+    color: #1a1a1a;
+    background: #f4f6f9;
+    padding: 24px;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    padding: 48px 56px;
+  }
+
+  /* ── Header ── */
+  .header {
+    border-top: 6px solid #0057b8;
+    padding-top: 20px;
+    margin-bottom: 32px;
+  }
+  .header h1 {
+    font-size: 22pt;
+    color: #0057b8;
+    margin-bottom: 6px;
+  }
+  .header .subtitle { font-size: 13pt; color: #333; margin-bottom: 16px; }
+  .meta-table { border-collapse: collapse; }
+  .meta-table td { padding: 3px 16px 3px 0; font-size: 10.5pt; }
+  .meta-table td:first-child { font-weight: 600; color: #555; width: 90px; }
+
+  hr { border: none; border-top: 1px solid #dce1ea; margin: 30px 0; }
+
+  /* ── Overview ── */
+  .overview {
+    background: #f0f5ff;
+    border-left: 4px solid #0057b8;
+    padding: 14px 18px;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 30px;
+    font-size: 10.5pt;
+    line-height: 1.7;
+  }
+
+  /* ── Step blocks ── */
+  .step {
+    margin-bottom: 36px;
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .step-num {
+    background: #0057b8;
+    color: #fff;
+    font-weight: 700;
+    font-size: 11pt;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step h2 {
+    font-size: 13pt;
+    color: #0057b8;
+  }
+
+  pre {
+    background: #1e2533;
+    color: #c9d1d9;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 9.5pt;
+    overflow-x: auto;
+    margin: 10px 0 14px;
+    line-height: 1.5;
+  }
+
+  .note {
+    background: #fff8e1;
+    border-left: 4px solid #f0a500;
+    padding: 10px 14px;
+    border-radius: 0 4px 4px 0;
+    font-size: 10pt;
+    margin: 10px 0 14px;
+    line-height: 1.6;
+  }
+  .note strong { color: #b45309; }
+
+  .screenshot-label {
+    font-size: 9.5pt;
+    color: #555;
+    font-style: italic;
+    margin-bottom: 6px;
+  }
+  .screenshot-wrap {
+    border: 1px solid #d0d7e3;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f8f9fc;
+    text-align: center;
+  }
+  .screenshot-wrap img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .screenshot-wrap .img-missing {
+    padding: 32px 16px;
+    color: #aaa;
+    font-size: 9.5pt;
+    font-style: italic;
+  }
+
+  /* ── Commands reference ── */
+  .commands-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 16px;
+    font-size: 9.5pt;
+    margin: 10px 0;
+  }
+  .commands-grid .num { font-weight: 700; color: #0057b8; }
+  .commands-grid code {
+    font-family: "Consolas", "Courier New", monospace;
+    background: #f0f5ff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #1a3a6b;
+  }
+
+  /* ── Tech notes ── */
+  .tech-table { border-collapse: collapse; width: 100%; font-size: 10pt; margin-top: 10px; }
+  .tech-table th, .tech-table td { padding: 7px 12px; text-align: left; border: 1px solid #dce1ea; }
+  .tech-table thead { background: #0057b8; color: #fff; }
+  .tech-table tbody tr:nth-child(even) { background: #f7f9fc; }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 40px;
+    border-top: 2px solid #0057b8;
+    padding-top: 12px;
+    font-size: 9pt;
+    color: #777;
+    text-align: center;
+  }
+
+  /* ── Print button ── */
+  .print-btn {
+    position: fixed;
+    top: 20px; right: 20px;
+    background: #0057b8;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 10pt;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,87,184,0.4);
+    z-index: 999;
+  }
+  .print-btn:hover { background: #0044a0; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨 Save as PDF</button>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>CS5525 — Assignment 3: Docker Image Demo</h1>
+    <div class="subtitle">HyperLogistics Package Tracker CLI</div>
+    <table class="meta-table">
+      <tr><td>Course</td><td>CS5525 - Cloud Computing</td></tr>  
+      <tr><td>Student</td><td>Tony Nguyen</td></tr>
+      <tr><td>Date</td><td>March 20, 2026</td></tr>
+      <tr><td>University</td><td>University of Missouri - Kansas City</td></tr>
+      <tr><td>Docker Hub</td><td>mosomo82</td></tr>
+    </table>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="overview">
+    A terminal-based package tracking CLI built with <strong>Python stdlib only</strong>,
+    containerized with Docker and published to Docker Hub under the student's own account
+    (<strong>mosomo82</strong>). No third-party pip packages are used. The application runs
+    identically locally and inside a <code>python:3-alpine</code> Docker container.
+  </div>
+
+  <hr>
+  <h2 style="font-size:14pt; color:#0057b8; margin-bottom:22px;">Steps &amp; Screenshots</h2>
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <h2>Build the Docker Image — image name contains student name</h2>
+    </div>
+    <pre>docker build -t tonyndemoimage .</pre>
+    <p style="font-size:10pt; margin-bottom:10px;">
+      The image name <strong>tonyndemoimage</strong> embeds the student name (Tony N).
+    </p>
+    <div class="screenshot-label">📸 Docker build output &amp; <code>docker images</code> listing:</div>
+    <div class="screenshot-wrap">
+      <img src="screenshots/step1_docker_build.png" alt="Step 1 – Docker Build"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="img-missing" style="display:none">[ screenshot: step1_docker_build.png ]</div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <h2>Run the Container Locally</h2>
+    </div>
+    <pre>docker run --rm tonyndemoimage</pre>
+    <div class="screenshot-label">📸 Container output — HyperLogistics banner, package table, fleet stats, route detail:</div>
+    <div class="screenshot-wrap">
+      <img src="screenshots/step2_docker_run.png" alt="Step 2 – Docker Run"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="img-missing" style="display:none">[ screenshot: step2_docker_run.png ]</div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <h2>Log In to Docker Hub — student's own account</h2>
+    </div>
+    <pre>docker login</pre>
+    <div class="screenshot-label">📸 Docker Hub login success showing username <strong>mosomo82</strong>:</div>
+    <div class="screenshot-wrap">
+      <img src="screenshots/step3_docker_login.png" alt="Step 3 – Docker Hub Login"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="img-missing" style="display:none">[ screenshot: step3_docker_login.png ]</div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <h2>Tag the Image for Docker Hub</h2>
+    </div>
+    <pre>docker tag tonyndemoimage mosomo82/cs5525demo_repo</pre>
+    <div class="screenshot-label">📸 <code>docker images</code> showing tagged repository <strong>mosomo82/cs5525demo_repo</strong>:</div>
+    <div class="screenshot-wrap">
+      <img src="screenshots/step4_docker_tag.png" alt="Step 4 – Docker Tag"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="img-missing" style="display:none">[ screenshot: step4_docker_tag.png ]</div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">5</div>
+      <h2>Push the Image to Docker Hub</h2>
+    </div>
+    <pre>docker push mosomo82/cs5525demo_repo</pre>
+    <div class="screenshot-label">📸 Push output confirming all layers uploaded to Docker Hub:</div>
+    <div class="screenshot-wrap">
+      <img src="screenshots/step5_docker_push.png" alt="Step 5 – Docker Push"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="img-missing" style="display:none">[ screenshot: step5_docker_push.png ]</div>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">6</div>
+      <h2>Verify Image on Docker Hub Website</h2>
+    </div>
+    <p style="font-size:10pt; margin-bottom:10px;">
+      URL: <code>https://hub.docker.com/repository/docker/mosomo82/cs5525demo_repo</code>
+    </p>
+    <p style="font-size:10pt; margin-bottom:10px;">Confirms: account name <strong>mosomo82</strong>, repository public, tag <strong>latest</strong>.</p>
+    <div class="screenshot-label">📸 Docker Hub web page — account name and repository visible:</div>
+    <div class="screenshot-wrap">
+      <img src="screenshots/step6_dockerhub_page.png" alt="Step 6 – Docker Hub Page"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <div class="img-missing" style="display:none">[ screenshot: step6_dockerhub_page.png ]</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- QUICK REFERENCE -->
+  <div class="step">
+    <h2 style="font-size:13pt; color:#0057b8; margin-bottom:14px;">Quick Reference — All Commands</h2>
+    <div class="commands-grid">
+      <span class="num">1.</span><code>docker build -t tonyndemoimage .</code>
+      <span class="num">2.</span><code>docker run --rm tonyndemoimage</code>
+      <span class="num">3.</span><code>docker login</code>
+      <span class="num">4.</span><code>docker tag tonyndemoimage mosomo82/cs5525demo_repo</code>
+      <span class="num">5.</span><code>docker push mosomo82/cs5525demo_repo</code>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- TECHNICAL NOTES -->
+  <div class="step">
+    <h2 style="font-size:13pt; color:#0057b8; margin-bottom:14px;">Technical Notes</h2>
+    <table class="tech-table">
+      <thead><tr><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Base image</td><td><code>python:3-alpine</code> — no additional packages installed</td></tr>
+        <tr><td>Dependencies</td><td>Python stdlib only: <code>datetime</code>, <code>sys</code>, <code>os</code></td></tr>
+        <tr><td>Non-interactive safe</td><td><code>sys.stdin.isatty()</code> gates interactive prompt — container exits cleanly</td></tr>
+        <tr><td>Reproducible output</td><td>8 hardcoded package records (no <code>random</code>) — identical on every run</td></tr>
+        <tr><td>Packages tracked</td><td>8 shipments across 4 statuses: Processing, In Transit, Out for Delivery, Delivered</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    CS5525 &nbsp;|&nbsp; Tony Nguyen &nbsp;|&nbsp;  March 20, 2026
+  </div>
+
+</div><!-- end .page -->
+</body>
+</html>
